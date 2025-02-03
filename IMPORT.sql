@@ -1,0 +1,8 @@
+CREATE TABLE `zx_codes` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `code` VARCHAR(255) NOT NULL,
+  `item` VARCHAR(255) NOT NULL,
+  `amount` INT NOT NULL,
+  `created_by` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

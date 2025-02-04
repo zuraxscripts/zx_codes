@@ -28,7 +28,6 @@ The configuration file (`config.lua`) allows you to customize:
 ```lua
 Config = {}
 
-Config.Webhook = "YOUR_DISCORD_WEBHOOK_URL" -- Change this to your Discord webhook
 Config.AdminCommand = "createcode"
 Config.ClaimCommand = "claim"
 ```

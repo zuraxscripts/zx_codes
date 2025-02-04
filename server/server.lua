@@ -4,8 +4,16 @@ lib.addCommand(Config.AdminCommand, {
     help = "Open the voucher code creation menu",
     restricted = "admin"
 }, function(source)
-    TriggerClientEvent("openVoucherAdminMenu", source)
+    local src = source
+    local xPlayer = ESX.GetPlayerFromId(source)
+    
+    if xPlayer and (xPlayer.getGroup() == "admin" or xPlayer.getGroup() == "superadmin") then
+        TriggerClientEvent("openVoucherAdminMenu", source)
+    else
+        TriggerClientEvent("ox_lib:notify", src, { type = "error", description = "Not Admin" })
+    end
 end)
+
 
 lib.addCommand(Config.ClaimCommand, {
     help = "Open the voucher claim menu"
@@ -34,7 +42,7 @@ RegisterNetEvent("zx_codes:createCode", function(data)
         if result then
             sendToDiscord("Voucher Code Created", 
                 "**Admin:** "..xPlayer.getName().."\n**Code:** "..code.."\n**Item:** "..item.."\n**Amount:** "..amount,
-                Config.Webhook)
+                SvConfig.Webhook)
 
             TriggerClientEvent("ox_lib:notify", src, { type = "success", description = "Voucher code created!" })
         end
@@ -58,7 +66,7 @@ RegisterNetEvent("zx_codes:claimCode", function(data)
 
                 sendToDiscord("Voucher Claimed", 
                     "**Player:** "..xPlayer.getName().."\n**Code:** "..code.."\n**Item:** "..data.item.."\n**Amount:** "..data.amount,
-                    Config.Webhook)
+                    SvConfig.Webhook)
 
                 TriggerClientEvent("ox_lib:notify", src, { type = "success", description = "You have claimed your items!" })
             else

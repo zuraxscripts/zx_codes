@@ -27,6 +27,11 @@ RegisterNetEvent("zx_codes:createCode", function(data)
 
     if not xPlayer then return end
 
+    if xPlayer.getGroup() ~= "admin" then
+        print(("Unauthorized access attempt by %s (%s)"):format(xPlayer.getName(), xPlayer.identifier))
+        return
+    end
+
     local code = data.code
     local item = data.item
     local amount = tonumber(data.amount)
@@ -41,13 +46,14 @@ RegisterNetEvent("zx_codes:createCode", function(data)
 
         if result then
             sendToDiscord("Voucher Code Created", 
-                "**Admin:** "..xPlayer.getName().."\n**Code:** "..code.."\n**Item:** "..item.."\n**Amount:** "..amount,
-                SvConfig.Webhook)
+                ("**Admin:** %s\n**Code:** %s\n**Item:** %s\n**Amount:** %d"):format(xPlayer.getName(), code, item, amount),
+                Config.Webhook)
 
             TriggerClientEvent("ox_lib:notify", src, { type = "success", description = "Voucher code created!" })
         end
     end)
 end)
+
 
 RegisterNetEvent("zx_codes:claimCode", function(data)
     local src = source
